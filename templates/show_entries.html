@@ -1,0 +1,45 @@
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <strong>Alert Heading</strong> {{logged_in}}
+</div>
+
+<script>
+  var alertList = document.querySelectorAll('.alert');
+  alertList.forEach(function (alert) {
+    new bootstrap.Alert(alert)
+  })
+</script>
+
+{% include 'home.html'%}
+
+   
+   <div class="container mt-5">
+      <h1>Trades</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Date</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for trade in trades %}
+            <tr>
+              <td>{{ trade.symbol }}</td>
+              <td>{{ trade.date }}</td>
+              <td>{{ trade.notes }}</td>
+              <td>
+                <a href="{{ url_for('edit_trade', entry_id=trade.entry_id) }}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{{ url_for('delete_trade', entry_id=trade.entry_id) }}" class="btn btn-danger btn-sm">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="container">
+      <a name="" id="" class="btn btn-primary" href="{{url_for('add_trade')}}" role="button">Add Trade</a>
+    </div>
+ 

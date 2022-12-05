@@ -1,0 +1,28 @@
+{% include 'home.html' %}
+    <div class="container mt-5">
+      <h1>Sign Up</h1>
+      {% if error %}
+        <p class="alert alert-danger">{{ error }}</p>
+      {% endif %}
+      <form method="post">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="phonenumber">Phone Number</label>
+          <input type="text" class="form-control" id="phonenumber" name="phonenumber" required>
+        </div>
+        <div class="form-group">
+          <label for="phonenumber">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+    </div>
+  </body>
+</html>

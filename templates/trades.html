@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Trading Journal</title>
+  </head>
+  <body>
+    <div class="jumbotron jumbotron-fluid bg-dark text-white">
+      <div class="container">
+        <h1 class="display-4">Trading Journal</h1>
+        <p class="lead">Track your trades and improve your performance.</p>
+      </div>
+    </div>
+    
+    <div class="container mt-5">
+      <h2>Your Recent Trades</h2>
+      {% for entry in entries %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ entry.symbol }} - {{ entry.date }}</h5>
+            <p class="card-text">{{ entry.notes }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
