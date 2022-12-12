@@ -15,5 +15,7 @@ CREATE TABLE entries (
         
     notes TEXT,
     SL INTEGER,
+    price INTEGER,
+    profit INTEGER,
     FOREIGN KEY (phonenumber) REFERENCES users (phonenumber)
 );

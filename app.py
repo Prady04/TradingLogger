@@ -2,19 +2,31 @@ from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
 import sqlite3
+from model import User, Entry
 
 # Configuration
 DATABASE = 'trading.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 
+
+
+
 # Create the Flask app
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
 # Connect to the database
 def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
+    conn = sqlite3.connect(app.config['DATABASE']);
+    conn.row_factory = sqlite3.Row
+    return conn
 
 # Initialize the database
 def init_db():
@@ -50,7 +62,7 @@ def register():
         if cur.fetchone() is not None:
             error = 'Username already exists'
         else:
-            db.execute('insert into users (phonenumber, username, email,password) values (?,?,?,?)',
+            db.execute('insert into users (phonenumber, username, password,email) values (?,?,?,?)',
                        
                        [request.form['phonenumber'],
                         request.form['username'],
@@ -73,6 +85,7 @@ def login():
         if user is None:
             error = 'Invalid username'
         elif user[1] != request.form['password']:
+            print(user[1])
             error = 'Invalid password'
         else:
             session['logged_in'] = True
@@ -88,21 +101,20 @@ def logout():
   session['logged_in']=False
   return render_template('home.html')
 
-# Add a new trade to the journal
-def add_trade(symbol, date, notes):
-    db = get_db()
-    phonenumber = session['phonenumber']
-    db.execute('insert into entries (phonenumber, symbol, date, notes) values (?,?,?,?)',
-               [phonenumber, symbol, date, notes])
-    db.commit()
+
+    
 
 # Get all trade entries for the current user
 def get_trades():
+    
     db = get_db()
     phonenumber = session['phonenumber']
-    cur = db.execute('select symbol, date, notes from entries where phonenumber = ?',
+    print(phonenumber)
+    cur = db.execute('select symbol, date, notes,quantity,SL,oprice,cprice from entries where phonenumber = ?',
                      [phonenumber])
-    trades = cur.fetchall()
+    
+    trades =dict(result=[dict(r) for r in cur.fetchall()])
+      
     return trades
 
 # Show the trading journal entries
@@ -113,23 +125,52 @@ def show_entries():
     trades = get_trades()
     return render_template('show_entries.html', trades=trades, logged_in=True)
 
-def add_entry(symbol, date, notes):
-    db = get_db()
-    phonenumber = session['phonenumber']
-    db.execute('insert into entries (phonenumber, symbol, date, notes) values (?,?,?,?)',
-               [phonenumber, symbol, date, notes])
-    db.commit()
+
 
 @app.route('/add_trade', methods=['GET', 'POST'])
 def add_trade():
     if request.method == 'POST':
+        
+        db = get_db()
+        rr = 0.0
+    
+        phonenumber = session['phonenumber']
         symbol = request.form['symbol']
-        date = request.form['date']
+        date = request.form['date']       
+        qty = int(request.form['qty'])
         notes = request.form['notes']
-        add_entry(symbol, date, notes)
+        sl = int(request.form['sl'])
+        oprice = int(request.form['oprice'])
+        cprice = int(request.form['cprice'])       
+        profit = (cprice-oprice)*qty
+        if (cprice != 0):
+            rr = (cprice-oprice)/(oprice-sl)
+        print(oprice,cprice,qty,profit)
+        db.execute('insert into entries (phonenumber, symbol,date,quantity,notes,SL,oprice, cprice, profit,rr) values (?,?,?,?,?,?,?,?,?,?)',
+               [phonenumber, symbol, date,qty,notes,sl,oprice,cprice,profit,rr])
+        db.commit()
         flash('New entry was successfully posted')
         return redirect(url_for('show_entries'))
     return render_template('add_trades.html')
+
+@app.route('/stats')
+def stats():
+    numtrades = 0
+    db = get_db()
+    phonenumber = session['phonenumber']
+    cur = db.execute('select symbol, profit,rr from entries where phonenumber = ?', [phonenumber])
+    
+    pnl =dict(result=[dict(r) for r in cur.fetchall()])
+    numtrades = db.execute('select COUNT() from entries where phonenumber= ?',[phonenumber]).fetchone()[0]
+    for pl in pnl['result']:
+        print(pl)
+       
+    return render_template('stats.html', pnl=pnl, numtrades=numtrades, logged_in=True)
+
+@app.route('/zerodha')
+def zerodha():
+    return render_template('zerodha.html')  
+
 
 @app.route('/idb')
 def idb():
