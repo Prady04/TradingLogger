@@ -3,6 +3,8 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing
 import sqlite3
 from model import User, Entry
+from zerodha import Zbroker
+import math
 
 # Configuration
 DATABASE = 'trading.db'
@@ -167,8 +169,27 @@ def stats():
        
     return render_template('stats.html', pnl=pnl, numtrades=numtrades, logged_in=True)
 
-@app.route('/zerodha')
+@app.route('/zerodha', methods=['GET','POST'])
 def zerodha():
+    print(request.form)
+    if request.method=='POST':
+        username = request.form['username']
+        pwd = request.form['password']
+        twofa = request.form['2FA']
+        #print(twofa)
+        z = Zbroker(username, pwd, twofa)
+        status = z.login()
+        holdings = z.holdings()
+        positions = z.positions()
+        #print(positions['net'])
+        return render_template(
+            'zerodha.html',
+            status = status,
+            holdings = holdings,
+            positions= positions['net']
+        )                                                                                                        
+    
+    
     return render_template('zerodha.html')  
 
 

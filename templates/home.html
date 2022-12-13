@@ -12,68 +12,43 @@
   
 
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <a class="navbar-brand" href="#">TJ</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto ">
-      <li class="nav-item active">
-        <a class="nav-link " href="#home">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#about">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#services">Services</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#contact">Contact</a>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 <!-- Hero -->
 <div class="jumbotron" id="home">
   <h1 class="display-4 ">Welcome to Tradwell</h1>
   <p class="lead ">Your trading journal on the web</p>
-</div>
-<div class="container-fluid text-center">
+  <a name="" id="" class="btn btn-primary btn-rounded  mx-3" href="{{url_for('register')}}" role="button">Zerodha</a>
+   <div class="container d-flex">
  
-  <div class="row">
-    
-    <div class="col-lg-6" >
-      {% if logged_in %}
-        <a name="" id="" class="btn btn-primary btn1" href="{{url_for('logout')}}" role="button">Sign Out</a>
-    
-        {% else %}
-    
-        <a name="" id="" class="btn btn-primary btn1" href="{{url_for('login')}}" role="button">Login</a>
-        {% endif %}
-    </div>
-    <div class="col-lg-6 text-center" >
-      {% if logged_in %}
+  
+    {% if logged_in %}
+      <a name="" id="" class="btn btn-primary btn-lg  mx-3" href="{{url_for('logout')}}" role="button">Sign Out</a>
+  
       {% else %}
-        <a name="" id="" class="btn btn-primary btn2" href="{{url_for('register')}}" role="button">Sign Up</a>
+  
+      <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('login')}}" role="button">Login</a>
       {% endif %}
-    </div>
-  </div>
+ 
+    {% if logged_in %}
+    {% else %}
+      <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('register')}}" role="button">Sign Up</a>
+    {% endif %}
+ 
+</div>
 </div>
 
+<div>
    
   
   
-</div>
+
 
 {% block content %}
   
 {% endblock content %}
 
-
+</div>
 <!-- Scrollspy -->
 <script>
   $('body').scrollspy({ target: '#navbarSupportedContent' });

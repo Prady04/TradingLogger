@@ -5,6 +5,7 @@ body {
   font: 20px Montserrat, sans-serif;
   line-height: 1.8;
   color: #f5f6f7;
+  background-color:#333;
 }
 p {font-size: 16px;}
 
@@ -42,6 +43,10 @@ p {font-size: 16px;}
   font-family: 'Raleway', Helvetica, Arial, sans-serif;
   font-weight: 400;
   
+  
+}
+.btn-outline-primary{
+  margin-left: 60%;
 }
 
 
