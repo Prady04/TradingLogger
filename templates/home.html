@@ -14,11 +14,27 @@
   <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
   <title>Trading Log</title>
 </head>
-<body>
+<body id="page-top">
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="#page-top">VT</a>
+        <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">PF</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">About</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+  </nav>
   <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
-        <img class="masthead-avatar mb-5" src="{{url_for('static',filename='img/avataaars.svg')}}" alt="..." />
+        <img class="masthead-avatar mb-5" src="{{url_for('static',filename='img/avatar.svg')}}" alt="..." />
         <!-- Masthead Heading-->
         <h1 class="masthead-heading text-uppercase mb-0">Welcome to Tradwell</h1>
         
@@ -32,10 +48,10 @@
         <p class="masthead-subheading font-weight-light mb-0">Your trading journal on the web</p>
     </div>
 </header>
-<section class="page-section buttons" id="buttons">
+<section class="page-section portfolio" id="portfolio">
   <div class="container">
       <!-- Portfolio Section Heading-->
-      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Get Right In!</h2>
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
       <!-- Icon Divider-->
       <div class="divider-custom">
           <div class="divider-custom-line"></div>
@@ -46,63 +62,57 @@
       <div class="row justify-content-center">
           <!-- Portfolio Item 1-->
           <div class="col-md-6 col-lg-4 mb-5">
-            {% if logged_in %}
-            <a name="" id="" class="btn btn-primary btn-lg  mx-3" href="{{url_for('logout')}}" role="button">Sign Out</a>
-      
-            {% else %}
-      
-              <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('login')}}" role="button">Login</a>
-            {% endif %}
+              
+                  {% if logged_in %}
+                  <a name="" id="" class="btn btn-primary btn-lg  mx-3" href="{{url_for('logout')}}" role="button">Sign Out</a>
+            
+                  {% else %}
+            
+                    <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('login')}}" role="button">Login</a>
+                  {% endif %}
+              
           </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-            {% if logged_in %}
+          <div class="col-md-6 col-lg-4 mb-5">
+            
+
+                {% if logged_in %}
             {% else %}
              <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('register')}}" role="button">Sign Up</a>
             {% endif %}
+            
+        
           </div>
           <div class="col-md-6 col-lg-4 mb-5">
-          <a name="" id="" class="btn btn-warning btn-lg w-100 mx-3" href="{{url_for('zerodha')}}" role="button">Zerodha</a>
-          </div>
+            
+                <a name="" id="" class="btn btn-warning btn-lg w-100 mx-3" href="{{url_for('zerodha')}}" role="button">Zerodha</a>
+            
         </div>
+        </div>
+      </div>
     </div>
-         
-</section>
+
 <!-- Hero -->
-<div class="jumbotron jumbotron-fluid bg-cover" id="home">
-  <div class="container text-center">
+<section id="content">
+  <div class="container">
+    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Details</h2>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+      </div>
    
-    <h1 class="display-4 ">Welcome to Tradwell</h1>
-    <p class="lead ">Your trading journal on the web</p>
-    <div class="container d-flex"> 
-    <a name="" id="" class="btn btn-primary btn-rounded  mx-3" href="{{url_for('register')}}" role="button">Zerodha</a>
-     
-      {% if logged_in %}
-        <a name="" id="" class="btn btn-primary btn-lg  mx-3" href="{{url_for('logout')}}" role="button">Sign Out</a>
-  
-      {% else %}
-  
-        <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('login')}}" role="button">Login</a>
-      {% endif %}
- 
-      {% if logged_in %}
-      {% else %}
-        <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('register')}}" role="button">Sign Up</a>
-      {% endif %}
- 
-    </div>
-    <div>
   
       {% block content %}
         
       {% endblock content %}
       
-    </div>
-
   </div>
-</div>
+
+  
+</section>
 
 
-<!-- Scrollspy -->
 <script>
   $('body').scrollspy({ target: '#navbarSupportedContent' });
 </script>
