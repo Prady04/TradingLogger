@@ -5,50 +5,103 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
   <title>Trading Log</title>
 </head>
 <body>
-  
-
-
-
-
+  <header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Avatar Image-->
+        <img class="masthead-avatar mb-5" src="{{url_for('static',filename='img/avataaars.svg')}}" alt="..." />
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading text-uppercase mb-0">Welcome to Tradwell</h1>
+        
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Masthead Subheading-->
+        <p class="masthead-subheading font-weight-light mb-0">Your trading journal on the web</p>
+    </div>
+</header>
+<section class="page-section buttons" id="buttons">
+  <div class="container">
+      <!-- Portfolio Section Heading-->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Get Right In!</h2>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+      </div>
+      <!-- Portfolio Grid Items-->
+      <div class="row justify-content-center">
+          <!-- Portfolio Item 1-->
+          <div class="col-md-6 col-lg-4 mb-5">
+            {% if logged_in %}
+            <a name="" id="" class="btn btn-primary btn-lg  mx-3" href="{{url_for('logout')}}" role="button">Sign Out</a>
+      
+            {% else %}
+      
+              <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('login')}}" role="button">Login</a>
+            {% endif %}
+          </div>
+            <div class="col-md-6 col-lg-4 mb-5">
+            {% if logged_in %}
+            {% else %}
+             <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('register')}}" role="button">Sign Up</a>
+            {% endif %}
+          </div>
+          <div class="col-md-6 col-lg-4 mb-5">
+          <a name="" id="" class="btn btn-warning btn-lg w-100 mx-3" href="{{url_for('zerodha')}}" role="button">Zerodha</a>
+          </div>
+        </div>
+    </div>
+         
+</section>
 <!-- Hero -->
-<div class="jumbotron" id="home">
-  <h1 class="display-4 ">Welcome to Tradwell</h1>
-  <p class="lead ">Your trading journal on the web</p>
-  <a name="" id="" class="btn btn-primary btn-rounded  mx-3" href="{{url_for('register')}}" role="button">Zerodha</a>
-   <div class="container d-flex">
- 
-  
-    {% if logged_in %}
-      <a name="" id="" class="btn btn-primary btn-lg  mx-3" href="{{url_for('logout')}}" role="button">Sign Out</a>
+<div class="jumbotron jumbotron-fluid bg-cover" id="home">
+  <div class="container text-center">
+   
+    <h1 class="display-4 ">Welcome to Tradwell</h1>
+    <p class="lead ">Your trading journal on the web</p>
+    <div class="container d-flex"> 
+    <a name="" id="" class="btn btn-primary btn-rounded  mx-3" href="{{url_for('register')}}" role="button">Zerodha</a>
+     
+      {% if logged_in %}
+        <a name="" id="" class="btn btn-primary btn-lg  mx-3" href="{{url_for('logout')}}" role="button">Sign Out</a>
   
       {% else %}
   
-      <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('login')}}" role="button">Login</a>
+        <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('login')}}" role="button">Login</a>
       {% endif %}
  
-    {% if logged_in %}
-    {% else %}
-      <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('register')}}" role="button">Sign Up</a>
-    {% endif %}
+      {% if logged_in %}
+      {% else %}
+        <a name="" id="" class="btn btn-primary btn-lg w-100 mx-3" href="{{url_for('register')}}" role="button">Sign Up</a>
+      {% endif %}
  
-</div>
-</div>
-
-<div>
-   
+    </div>
+    <div>
   
-  
+      {% block content %}
+        
+      {% endblock content %}
+      
+    </div>
 
-
-{% block content %}
-  
-{% endblock content %}
-
+  </div>
 </div>
+
+
 <!-- Scrollspy -->
 <script>
   $('body').scrollspy({ target: '#navbarSupportedContent' });
