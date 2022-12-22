@@ -19,3 +19,11 @@ CREATE TABLE entries (
     profit INTEGER,
     FOREIGN KEY (phonenumber) REFERENCES users (phonenumber)
 );
+
+CREATE TABLE "patterns" (
+	"pattern_id"	INTEGER NOT NULL,
+	"stock"	TEXT NOT NULL,
+	"pattern"	TEXT NOT NULL,
+	"date"	TEXT NOT NULL,
+	PRIMARY KEY("pattern_id" AUTOINCREMENT)
+);

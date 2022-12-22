@@ -11,6 +11,9 @@
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css" rel="stylesheet">
+       
   <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
   <title>Trading Log</title>
 </head>
@@ -87,6 +90,16 @@
                 <a name="" id="" class="btn btn-warning btn-lg w-100 mx-3" href="{{url_for('zerodha')}}" role="button">Zerodha</a>
             
         </div>
+        <div class="col-md-6 col-lg-4 mb-5">
+            
+          <a name="" id="" class="btn btn-warning btn-lg w-100 mx-3" href="{{url_for('amiauto')}}" role="button">AmiBroker</a>
+      
+  </div>
+    <div class="col-md-6 col-lg-4 mb-5">
+            
+      <a name="" id="" class="btn btn-info btn-lg w-100 mx-3" href="{{url_for('patterns')}}" role="button">CandlePatterns</a>
+
+  </div>
         </div>
       </div>
     </div>
@@ -113,8 +126,6 @@
 </section>
 
 
-<script>
-  $('body').scrollspy({ target: '#navbarSupportedContent' });
-</script>
 </body>
+
 </html>

@@ -1,10 +1,13 @@
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
+from flask_login import login_required,LoginManager
 from contextlib import closing
 import sqlite3
 from model import User, Entry
 from zerodha import Zbroker
 import math
+import datetime as dt
+from importpatterns import ImportPatterns
 
 # Configuration
 DATABASE = 'trading.db'
@@ -17,6 +20,7 @@ SECRET_KEY = 'development key'
 # Create the Flask app
 app = Flask(__name__)
 app.config.from_object(__name__)
+
 
 
 def dict_factory(cursor, row):
@@ -101,6 +105,7 @@ def login():
 @app.route('/logout')
 def logout():
   session['logged_in']=False
+  
   return render_template('home.html')
 
 
@@ -119,7 +124,7 @@ def get_trades():
       
     return trades
 
-# Show the trading journal entries
+
 @app.route('/show_entries')
 def show_entries():
     if not session.get('logged_in'):
@@ -145,7 +150,7 @@ def add_trade():
         oprice = int(request.form['oprice'])
         cprice = int(request.form['cprice'])       
         profit = (cprice-oprice)*qty
-        if (cprice != 0):
+        if (oprice != 0):
             rr = (cprice-oprice)/(oprice-sl)
         print(oprice,cprice,qty,profit)
         db.execute('insert into entries (phonenumber, symbol,date,quantity,notes,SL,oprice, cprice, profit,rr) values (?,?,?,?,?,?,?,?,?,?)',
@@ -192,8 +197,31 @@ def zerodha():
     
     return render_template('zerodha.html')  
 
+@app.route("/amiauto")
+def amiauto():
+    print("ami")
+ 
+@app.route("/patterns")
+def patterns():
+    
+    db = get_db()
+    two_days_ago = dt.datetime.now() - dt.timedelta(days=2)
+   
+    cur = db.execute(f"select stock, pattern, pattern_date from patterns where pattern_date>=?",[ two_days_ago])
+    patterns = cur.fetchall()    
+        
+    return(render_template('patterns.html',patterns=patterns))
+        
 
 @app.route('/idb')
 def idb():
   init_db()
   return render_template('login.html')
+
+@app.route('/pp')
+def populate_patterns():
+        
+    obj = ImportPatterns(get_db())
+    obj._read_new_files()
+    return(render_template('empty.html',result="success"))
+    

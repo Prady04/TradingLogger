@@ -1,0 +1,31 @@
+{% include 'home.html'%}
+
+
+<div class="container mt-5 table-responsive">
+  <h1>Patterns</h1>
+
+  <table class="table" id="patterntable">
+    <caption text-success>
+      Candle Patterns in the last two calendar days
+    </caption>
+    <thead>
+      <tr>
+        <th data-sortable="true" scope="col">Symbol</th>
+        <th data-sortable="true" >Pattern</th>
+        <th data-sortable="true" >Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pattern in patterns%}
+
+      <tr>
+        <td><a href="https://in.tradingview.com/chart/?symbol=NSE%3A{{pattern['stock']}}">{{pattern['stock']}}</a> </td>
+        <td>{{pattern['pattern'] }}</td>
+        <td>{{pattern['pattern_date'] }}</td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<script src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js"></script>
