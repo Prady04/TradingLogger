@@ -213,6 +213,13 @@ def patterns():
     return(render_template('patterns.html',patterns=patterns))
         
 
+@app.route('/scorecard')
+def populate_scorecard():
+        
+    obj = ImportPatterns(get_db())
+    obj._read_new_files()
+    return(render_template('empty.html',result="success"))
+
 @app.route('/idb')
 def idb():
   init_db()

@@ -1,0 +1,40 @@
+{%include 'home.html'%}
+<div class="container mt-5">
+  <div class ="row">
+    <div class="col-lg-8">
+      <h1>Scorecard</h1>
+    </div>
+    <div class="col-lg-4">
+      <h2>Total Trades {{ numtrades }}</h2>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th scope="col">Symbol</th>
+          <th scope="col">Profit</th>
+          <th scope="col">Risk Reward</th>
+
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for pl in pnl['result'] %}
+          
+            <tr>
+              
+              <td>{{pl['symbol'] }}</td>
+              <td>{{pl['profit'] }}</td>          
+              <td>{{pl['rr'] }}</td>
+              
+              
+          </tr>
+          
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+ 
+</div>
